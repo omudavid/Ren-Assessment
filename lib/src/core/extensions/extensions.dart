@@ -30,14 +30,13 @@ extension FutureExtension<T> on Future<T> {
       final data = await this;
       return Right(data);
     } on DioException catch (e, s) {
-      print('object===$e');
+      ///Handle Error
       return Left(
         ServerFailure(
             message: e.errorMessage, statusCode: e.response?.statusCode),
       );
     } catch (e, s) {
-      print('object===$e');
-      print('object===$s');
+      ///Handle Error
       return const Left(
         ServerFailure(),
       );

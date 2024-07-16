@@ -33,7 +33,7 @@ class WeatherCubit extends Cubit<WeatherCubitState> {
     final response = await _getCitiesFromJsonUsecase(NoParam());
 
     await response.fold((l) {
-      print('L ===>${l.statusCode}');
+     ///Handle Error
     }, (r) {
       emit(state.copyWith(
         cities: r,
@@ -43,7 +43,7 @@ class WeatherCubit extends Cubit<WeatherCubitState> {
     final response2 = await _getCitiesUsecase(NoParam());
 
     await response2.fold((l) {
-      print('L ===>${l.message}');
+      ///Handle Error
     }, (r) {
       if (r.isEmpty) {
         final cities = state.cities
@@ -74,7 +74,7 @@ class WeatherCubit extends Cubit<WeatherCubitState> {
     final response = await _getWeatherUsecase(WeatherParams(
         lat: citySelected.lat ?? '', lon: citySelected.lng ?? ''));
     response.fold((l) {
-      print('L ===cc>${l.statusCode}');
+      ///Handle Error
     }, (r) {
       emit(state.copyWith(
           fetchWeatherStatus: FormzSubmissionStatus.initial,
@@ -100,11 +100,9 @@ class WeatherCubit extends Cubit<WeatherCubitState> {
     final unselectedCities =
         state.cities.where((e) => !state.selectedCities.contains(e)).toList();
     emit(state.copyWith(unselectedCities: unselectedCities));
-    print('object === ${state.unselectedCities}');
   }
 
   Future<void> getDeviceWeather() async {
-    print('object');
     final permission = await Geolocator.requestPermission();
     if (permission != LocationPermission.denied &&
         permission != LocationPermission.deniedForever) {
@@ -118,7 +116,7 @@ class WeatherCubit extends Cubit<WeatherCubitState> {
           lat: position?.latitude.toString() ?? '',
           lon: position?.longitude.toString() ?? ''));
       response.fold((l) {
-        print('L ===>${l.statusCode}');
+        ///Handle Error
       }, (r) {
         emit(state.copyWith(
             fetchDeviceWeatherStatus: FormzSubmissionStatus.initial,
